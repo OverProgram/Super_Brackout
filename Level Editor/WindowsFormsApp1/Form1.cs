@@ -11,12 +11,22 @@ using System.IO;
 
 namespace WindowsFormsApp1 {
     public partial class Form1 : Form {
-        CheckBox[] brickGrid;
+        ComboBox[] brickGrid;
+
+        Color lightestGreen = Color.FromArgb (155, 188, 15);
+        Color lightGreen = Color.FromArgb (139, 172, 15);
+        Color darkGreen = Color.FromArgb (48, 98, 48);
+        Color darkestGreen = Color.FromArgb (15, 56, 15);
 
         public Form1 () {
             InitializeComponent ();
 
-            brickGrid = new CheckBox[] {checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, checkBox7, checkBox8};
+            brickGrid = new ComboBox[] {brick1, brick2, brick3, brick4, brick5, brick6, brick7, brick8, brick9, brick10, brick11, brick12, brick13, brick14, brick15, brick16, brick17, brick18, brick19, brick20, brick21, brick22, brick23, brick24, brick25, brick26, brick27, brick28, brick29, brick30, brick31, brick32, brick33, brick34, brick35, brick36, brick37, brick38, brick39, brick40, brick41, brick42, brick43, brick44, brick45, brick46, brick47, brick48, brick49, brick50, brick51, brick52, brick53, brick54, brick55, brick56, brick57, brick58, brick59, brick60};
+            foreach (ComboBox brick in brickGrid) {
+                brick.SelectedIndex = 0;
+                brick.BackColor = lightestGreen;
+                brick.SelectedValueChanged += new EventHandler (ColorAccordingToIndex);
+            }
         }
 
         private void Export_Click (object sender, EventArgs e) {
@@ -27,18 +37,9 @@ namespace WindowsFormsApp1 {
             textOfFile[1] = "\t";
             Stream file = saveDialog.OpenFile ();
             for (int i = 0; i < brickGrid.Length - 1; i++) {
-                if (brickGrid[i].Checked) {
-                    textOfFile[1] += "1";
-                } else {
-                    textOfFile[1] += "0";
-                }
-                textOfFile[1] += ", ";
+                textOfFile[1] += brickGrid[i].SelectedIndex.ToString () + ", ";
             }
-            if (brickGrid[brickGrid.Length-1].Checked) {
-                textOfFile[1] += "1";
-            } else {
-                textOfFile[1] += "0";
-            }
+            textOfFile[1] += brickGrid[brickGrid.Length - 1].SelectedIndex.ToString () + ", ";
             textOfFile[2] += "};";
 
             using (StreamWriter streamWriter = new StreamWriter (file)) {
@@ -70,14 +71,31 @@ namespace WindowsFormsApp1 {
 
             char[] array = textInFile[1].ToCharArray ();
             int j = 0;
+            int num;
             foreach (char character in array) {
-                if (character == '1') {
-                    brickGrid[j].Checked = true;
-                    j++;
-                } else if (character == '0') {
-                    brickGrid[j].Checked = false;
+                if (int.TryParse (character.ToString(), out num)) {
+                    brickGrid[j].SelectedIndex = num;
                     j++;
                 }
+            }
+        }
+
+        private void ColorAccordingToIndex (object sender, EventArgs e) {
+            ComboBox brick = (ComboBox) sender;
+
+            switch (brick.SelectedIndex) {
+                case 0:
+                    brick.BackColor = lightestGreen;
+                    break;
+                case 1:
+                    brick.BackColor = lightGreen;
+                    break;
+                case 2:
+                    brick.BackColor = darkGreen;
+                    break;
+                case 3:
+                    brick.BackColor = darkestGreen;
+                    break;
             }
         }
     }
