@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using Microsoft.VisualBasic;
 
 namespace WindowsFormsApp1 {
     public partial class Form1 : Form {
@@ -32,15 +33,23 @@ namespace WindowsFormsApp1 {
         private void Export_Click (object sender, EventArgs e) {
             saveDialog.ShowDialog ();
 
-            string[] textOfFile = new string[3];
-            textOfFile[0] = "char " + Path.GetFileNameWithoutExtension(saveDialog.FileName) + "[] = {";
-            textOfFile[1] = "\t";
+            if (saveDialog.FileName == "") {
+                return;
+            }
+
+            List<string> textOfFile = new List<string>();
+            textOfFile.Add("char " + Path.GetFileNameWithoutExtension(saveDialog.FileName) + "[] = {");
+            int j = 0;
             Stream file = saveDialog.OpenFile ();
             for (int i = 0; i < brickGrid.Length - 1; i++) {
-                textOfFile[1] += brickGrid[i].SelectedIndex.ToString () + ", ";
+                if (i % 10 == 0) {
+                    j++;
+                    textOfFile.Add("\t");
+                }
+                textOfFile[j] += brickGrid[i].SelectedIndex.ToString () + ", ";
             }
-            textOfFile[1] += brickGrid[brickGrid.Length - 1].SelectedIndex.ToString () + ", ";
-            textOfFile[2] += "};";
+            textOfFile[j] += brickGrid[brickGrid.Length - 1].SelectedIndex.ToString ();
+            textOfFile.Add("};");
 
             using (StreamWriter streamWriter = new StreamWriter (file)) {
                 foreach (string line in textOfFile) {
@@ -60,22 +69,54 @@ namespace WindowsFormsApp1 {
         private void lodeButton_Click (object sender, EventArgs e) {
             loadDialog.ShowDialog ();
 
-            Stream file = loadDialog.OpenFile ();
-            string[] textInFile = new string[3];
-
-            using (StreamReader streamReader = new StreamReader (file)) {
-                for (int i = 0; i < 3; i++) {
-                    textInFile[i] = streamReader.ReadLine ();
-                }
+            if (loadDialog.FileName == "") {
+                return;
             }
 
-            char[] array = textInFile[1].ToCharArray ();
-            int j = 0;
-            int num;
-            foreach (char character in array) {
-                if (int.TryParse (character.ToString(), out num)) {
-                    brickGrid[j].SelectedIndex = num;
-                    j++;
+            Stream file = loadDialog.OpenFile ();
+            List<string> textInFile = new List<string>();
+
+            using (StreamReader streamReader = new StreamReader (file)) {
+                while (!streamReader.EndOfStream) {
+                    textInFile.Add (streamReader.ReadLine ());
+                }
+            }
+            if (textInFile.Count == 9) {
+                int j = 0;
+                int num;
+                for (int line = 1; line <= 7; line++) {
+                    foreach (char character in textInFile[line].ToCharArray()) {
+                        if (int.TryParse (character.ToString (), out num)) {
+                            brickGrid[j].SelectedIndex = num;
+                            j++;
+                        }
+                    }
+                }
+                if (j != brickGrid.Length) {
+                    MessageBox.Show ("Error:\nTried to load invalid file");
+                }
+            } else {
+                string input = Interaction.InputBox ("File contains multiple stages\nWhich one to load:");
+                int line;
+                if (int.TryParse (input, out line)) {
+                    line = (line * 9) - 8;
+                    int lineLimit = line + 6;
+                    int j = 0;
+                    for (; line <= lineLimit; line++) {
+                        int num;
+                        char[] array = textInFile[line].ToCharArray ();
+                        foreach (char character in array) {
+                            if (int.TryParse (character.ToString (), out num)) {
+                                brickGrid[j].SelectedIndex = num;
+                                j++;
+                            }
+                        }
+                    }
+                    if (j != brickGrid.Length) {
+                        MessageBox.Show ("Error:\nTried to load invalid file or stage");
+                    }
+                } else {
+                    MessageBox.Show ("Invalid input");
                 }
             }
         }
@@ -97,6 +138,46 @@ namespace WindowsFormsApp1 {
                     brick.BackColor = darkestGreen;
                     break;
             }
+        }
+
+        private void addButton_Click (object sender, EventArgs e) {
+            addDialog.ShowDialog ();
+
+            if (addDialog.FileName == "") {
+                return;
+            }
+
+            List<string> textToFile = new List<string> ();
+            string stageName = Interaction.InputBox ("Enter stage name:");
+            textToFile.Add ("char " + stageName + "[] = {");
+            int j = 0;
+            string file = addDialog.FileName;
+            for (int i = 0; i < brickGrid.Length - 1; i++) {
+                if (i % 10 == 0) {
+                    j++;
+                    textToFile.Add ("\t");
+                }
+                textToFile[j] += brickGrid[i].SelectedIndex.ToString () + ", ";
+            }
+            textToFile[j] += brickGrid[brickGrid.Length - 1].SelectedIndex.ToString ();
+            textToFile.Add ("};");
+
+            using (StreamWriter streamWriter = new StreamWriter (file, append: true)) {
+                foreach (string line in textToFile) {
+                    streamWriter.WriteLine (line);
+                }
+            }
+
+        }
+
+        private void ResetBricks () {
+            foreach (ComboBox brick in brickGrid) {
+                brick.SelectedIndex = 0;
+            }
+        }
+
+        private void clearButton_Click (object sender, EventArgs e) {
+            ResetBricks ();
         }
     }
 }

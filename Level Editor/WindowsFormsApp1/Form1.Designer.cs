@@ -90,6 +90,9 @@
             this.brick53 = new System.Windows.Forms.ComboBox();
             this.brick54 = new System.Windows.Forms.ComboBox();
             this.brick49 = new System.Windows.Forms.ComboBox();
+            this.addButton = new System.Windows.Forms.Button();
+            this.addDialog = new System.Windows.Forms.OpenFileDialog();
+            this.clearButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -109,7 +112,7 @@
             // 
             // loadButton
             // 
-            this.loadButton.Location = new System.Drawing.Point(20, 570);
+            this.loadButton.Location = new System.Drawing.Point(351, 570);
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(187, 62);
             this.loadButton.TabIndex = 13;
@@ -120,6 +123,7 @@
             // loadDialog
             // 
             this.loadDialog.FileName = "openFileDialog1";
+            this.loadDialog.Filter = "C file (*.c)|*.c";
             // 
             // brick1
             // 
@@ -129,7 +133,7 @@
             "1",
             "2",
             "3"});
-            this.brick1.Location = new System.Drawing.Point(20, 13);
+            this.brick1.Location = new System.Drawing.Point(17, 12);
             this.brick1.Name = "brick1";
             this.brick1.Size = new System.Drawing.Size(204, 39);
             this.brick1.TabIndex = 14;
@@ -901,11 +905,38 @@
             this.brick49.Size = new System.Drawing.Size(204, 39);
             this.brick49.TabIndex = 80;
             // 
+            // addButton
+            // 
+            this.addButton.Location = new System.Drawing.Point(725, 570);
+            this.addButton.Name = "addButton";
+            this.addButton.Size = new System.Drawing.Size(187, 62);
+            this.addButton.TabIndex = 92;
+            this.addButton.Text = "Add";
+            this.addButton.UseVisualStyleBackColor = true;
+            this.addButton.Click += new System.EventHandler(this.addButton_Click);
+            // 
+            // addDialog
+            // 
+            this.addDialog.FileName = "openFileDialog1";
+            this.addDialog.Filter = "C file (*.c)|*.c";
+            // 
+            // clearButton
+            // 
+            this.clearButton.Location = new System.Drawing.Point(12, 570);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(187, 62);
+            this.clearButton.TabIndex = 93;
+            this.clearButton.Text = "Clear";
+            this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1285, 692);
+            this.Controls.Add(this.clearButton);
+            this.Controls.Add(this.addButton);
             this.Controls.Add(this.brick56);
             this.Controls.Add(this.brick57);
             this.Controls.Add(this.brick58);
@@ -1044,6 +1075,9 @@
         private System.Windows.Forms.ComboBox brick54;
         private System.Windows.Forms.ComboBox brick49;
         private System.Windows.Forms.ComboBox brick15;
+        private System.Windows.Forms.Button addButton;
+        private System.Windows.Forms.OpenFileDialog addDialog;
+        private System.Windows.Forms.Button clearButton;
     }
 }
 
