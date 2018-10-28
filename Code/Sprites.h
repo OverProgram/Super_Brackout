@@ -1,6 +1,6 @@
 /*
 
- BRICK 3_2.H
+ SPRITES.H
 
  Include File.
 
@@ -9,8 +9,8 @@
   Format               : Gameboy 4 color.
   Compression          : None.
   Counter              : None.
-  Tile size            : 16 x 16
-  Tiles                : 2 to 2
+  Tile size            : 8 x 8
+  Tiles                : 0 to 110
 
   Palette colors       : None.
   SGB Palette          : None.
@@ -24,8 +24,8 @@
 
 
 /* Bank of tiles. */
-#define brick3_2Bank 0
+#define TileLabelBank 0
 /* Start of tile array. */
-extern unsigned char brick3_2[];
+extern unsigned char sprites[];
 
-/* End of BRICK 3_2.H */
+/* End of SPRITES.H */

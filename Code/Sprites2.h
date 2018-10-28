@@ -1,6 +1,6 @@
 /*
 
- BRICK 3.H
+ SPRITES2.H
 
  Include File.
 
@@ -10,7 +10,7 @@
   Compression          : None.
   Counter              : None.
   Tile size            : 16 x 16
-  Tiles                : 0 to 0
+  Tiles                : 0 to 24
 
   Palette colors       : None.
   SGB Palette          : None.
@@ -24,8 +24,8 @@
 
 
 /* Bank of tiles. */
-#define brick3Bank 0
+#define spritesBank 0
 /* Start of tile array. */
-extern unsigned char brick3[];
+extern unsigned char sprites[];
 
-/* End of BRICK 3.H */
+/* End of SPRITES2.H */

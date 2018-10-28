@@ -1,0 +1,1 @@
+C:\gbdk\bin\lcc -o superbreakout.gb Main.c Sprites2.c bricks.c

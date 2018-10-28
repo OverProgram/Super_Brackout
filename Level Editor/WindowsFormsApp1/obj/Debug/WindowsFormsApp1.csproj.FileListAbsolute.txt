@@ -18,3 +18,7 @@ C:\Users\tomer\Documents\GitHub\Super_Brackout\Level Editor\WindowsFormsApp1\obj
 C:\Users\tomer\Documents\GitHub\Super_Brackout\Level Editor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 C:\Users\tomer\Documents\GitHub\Super_Brackout\Level Editor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\tomer\Documents\GitHub\Super_Brackout\Level Editor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\tomer\Documents\GitHub\Super_Brackout\Level Editor\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.manifest
+C:\Users\tomer\Documents\GitHub\Super_Brackout\Level Editor\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.application
+C:\Users\tomer\Documents\GitHub\Super_Brackout\Level Editor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe.manifest
+C:\Users\tomer\Documents\GitHub\Super_Brackout\Level Editor\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.application

@@ -36,26 +36,45 @@ namespace WindowsFormsApp1 {
             if (saveDialog.FileName == "") {
                 return;
             }
-
-            List<string> textOfFile = new List<string>();
-            textOfFile.Add("char " + Path.GetFileNameWithoutExtension(saveDialog.FileName) + "[] = {");
+            string stageName = Interaction.InputBox ("Enter stage name:");
+            List<string> textOfFile = new List<string> ();
+            textOfFile.Add ("char " + stageName + "[] = {");
             int j = 0;
             Stream file = saveDialog.OpenFile ();
+            string headerPath = GetHeaderPath (saveDialog.FileName);
+            Stream header = new FileStream (headerPath, FileMode.Create);
             for (int i = 0; i < brickGrid.Length - 1; i++) {
                 if (i % 10 == 0) {
                     j++;
-                    textOfFile.Add("\t");
+                    textOfFile.Add ("\t");
                 }
                 textOfFile[j] += brickGrid[i].SelectedIndex.ToString () + ", ";
             }
             textOfFile[j] += brickGrid[brickGrid.Length - 1].SelectedIndex.ToString ();
-            textOfFile.Add("};");
+            textOfFile.Add ("};");
 
             using (StreamWriter streamWriter = new StreamWriter (file)) {
                 foreach (string line in textOfFile) {
                     streamWriter.WriteLine (line);
                 }
             }
+
+            using (StreamWriter streamWriter = new StreamWriter (header)) {
+                streamWriter.WriteLine ("char " + stageName + "[];");
+            }
+        }
+
+        private string GetHeaderPath (string path) {
+            string headerPath = "";
+            char[] fileName = path.ToCharArray ();
+            for (int chara = 0; chara < fileName.Length; chara++) {
+                if (chara < fileName.Length - 2) {
+                    headerPath += fileName[chara];
+                }
+            }
+            headerPath += ".h";
+
+            return headerPath;
         }
 
         private void button1_Click (object sender, EventArgs e) {
@@ -152,6 +171,7 @@ namespace WindowsFormsApp1 {
             textToFile.Add ("char " + stageName + "[] = {");
             int j = 0;
             string file = addDialog.FileName;
+            string header = GetHeaderPath (file);
             for (int i = 0; i < brickGrid.Length - 1; i++) {
                 if (i % 10 == 0) {
                     j++;
@@ -161,6 +181,15 @@ namespace WindowsFormsApp1 {
             }
             textToFile[j] += brickGrid[brickGrid.Length - 1].SelectedIndex.ToString ();
             textToFile.Add ("};");
+
+            try {
+                using (StreamWriter streamWriter = new StreamWriter (header, true)) {
+                    streamWriter.WriteLine ("char " + stageName + "[];");
+                }
+            } catch (IOException) {
+                MessageBox.Show ("Header file not found");
+                return;
+            }
 
             using (StreamWriter streamWriter = new StreamWriter (file, append: true)) {
                 foreach (string line in textToFile) {
