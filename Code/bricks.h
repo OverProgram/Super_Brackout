@@ -14,3 +14,11 @@ int length (bnode *first);
 void set_value_at (bnode *first, int index, brick *return_address);
 
 void copy_brick (brick *source, brick *dest);
+
+void draw_brick (brick *brick);
+
+void break_brick (brick *brk);
+
+void update_brick (brick *brk);
+
+int brick_starting_tile (brick *brk);
