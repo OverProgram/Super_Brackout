@@ -1,6 +1,6 @@
 #include "sb.h"
 
-int length (bnode *first) {
+/*int length (bnode *first) {
 	bnode *currant = first;
 	int counter = 0;
 	while (currant != 0) {
@@ -25,7 +25,7 @@ void copy_brick (brick *source, brick *dest) {
 	dest->index = source->index;
 	dest->type = source->type;
 	dest->status = source->status;
-}
+}*/
 
 void draw_brick (brick *brk) {
 	static unsigned int tile_index = 0;
@@ -33,7 +33,7 @@ void draw_brick (brick *brk) {
 	unsigned int currant_tile = brick_starting_tile(brk);
 	for (i = 0; i < 4; i++) {
 		set_sprite_tile(tile_index, currant_tile);
-		move_sprite (tile_index, (brk->x) + (PIXLES_IN_TILE * i), (brk->y));
+		move_sprite (tile_index, ((brk->position).x) + (PIXLES_IN_TILE * i), ((brk->position).y));
 		tile_index++;
 		currant_tile += 2;
 	}
